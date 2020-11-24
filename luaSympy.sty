@@ -1,23 +1,58 @@
-\newcommand\addPyVarEqList[3][path]{
-    \directlua{
-        luaSympy = require 'luaSympyAcess'
-        local path = pyPathAdd([[#1]], [[#2]])
-        python.execute("from "..[[#2]].." import "..[[#3]])
+\ProvidesPackage{luaSympy}
+\RequirePackage{luapackageloader}
+\RequirePackage{luacode}
+\RequirePackage{\packagePath/luaImport/luaImport}
+\RequirePackage{\packagePath/luaBridge/luaBridge}
+\directlua{
+    local path = "\packagePath"
+    luaSympy = require(path..'/luaSympy/luaSympy')
+}
 
+\newcommand\addPyFile[2][path]{
+    \directlua{optsTable = optsToTable([[#1]])}
+    \pythonImportFrom[\directlua{tex.sprint(optsTable['path'])}]{#2}{*}
+    \directlua{
+        varCall = optsTable.varName or 'var'
+        eqtCall = optsTable.eqtName or 'eqt'
+        varTable = {}
+        eqtTable = {}
+        pyEqt = pg[eqtCall]
+        pyVar = pg[varCall]
+        python.execute("varKeys = list("..varCall..".keys())")
+        python.execute("eqtKeys = list("..eqtCall..".keys())")
+        python.execute("eqtLen = len(eqtKeys)")
+        python.execute("varLen = len(varKeys)")
+        lenVar = math.floor(pg.varLen)
+        lenEqt = math.floor(pg.eqtLen)
+        for i = 0, lenVar-1, 1 do
+            local key = pg.varKeys[i]
+            local value = pyVar[key]
+            varTable[key] = value
+        end
+        for i = 0, lenEqt-1, 1 do
+            local key = pg.eqtKeys[i]
+            local value = pyEqt[key]
+            eqtTable[key] = value
+        end
+
+        newGlFromTable(varTable)
+        newGlFromTable(eqtTable)
+        newEqtFromTable(eqtTable)
     }
 }
-\newcommand\pyEq[2][noExp]{
-    \directlua{
-        tex.sprint(
-        local path = pyPathAdd([[#1]])
-        python.execute("import "..[[#2]])
-    }
-}
-\newcommand\pyRes[1]{
-    \directlua{
+%\pythonImportFrom[#1]{#2}{*}
+%\newcommand\pyEq[2][noExp]{
+    %\directlua{
+        %tex.sprint(
+        %local path = pyPathAdd([[#1]])
+        %python.execute("import "..[[#2]])
+    %}
+%}
+%\newcommand\pyRes[1]{
+    %\directlua{
         
-    }
-}
-\newcommand\pyVal[1]{
+    %}
+%}
+%\newcommand\pyVal[1]{
 
-}
+%}
