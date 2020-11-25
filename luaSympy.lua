@@ -15,16 +15,16 @@ for key, value in var:
     return {varTab, eqTab}
 end
 
-function optsToTable(opts)
-    print(opts)
-    if opts == 'path' then
-        return ''
-    end
-    inputs = {}
-    for key, value in string.gmatch(opts, '(%w+)%s*=%s*(.*),*') do
-        print(key)
-        print(value)
-        inputs[key] = value
-    end
-    return inputs
-end
+--function optsToTable(opts)
+    --print(opts)
+    --if opts == 'path' then
+        --return ''
+    --end
+    --inputs = {}
+    --for key, value in string.gmatch(opts, '(%w+)%s*=%s*(.*),*') do
+        --print(key)
+        --print(value)
+        --inputs[key] = value
+    --end
+    --return inputs
+--end

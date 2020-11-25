@@ -3,12 +3,13 @@
 \RequirePackage{luacode}
 \RequirePackage{\packagePath/luaImport/luaImport}
 \RequirePackage{\packagePath/luaBridge/luaBridge}
+\RequirePackage{\packagePath/luaHelper/luaHelper}
 \directlua{
     local path = "\packagePath"
     luaSympy = require(path..'/luaSympy/luaSympy')
 }
 
-\newcommand\addPyFile[2][path]{
+\newcommand\addPyFile[2][empty]{
     \directlua{optsTable = optsToTable([[#1]])}
     \pythonImportFrom[\directlua{tex.sprint(optsTable['path'])}]{#2}{*}
     \directlua{
