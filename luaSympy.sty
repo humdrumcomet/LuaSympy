@@ -10,34 +10,10 @@
 }
 
 \newcommand\addPyFile[2][empty]{
-    \directlua{optsTable = optsToTable([[#1]])}
-    \pythonImportFrom[\directlua{tex.sprint(optsTable['path'])}]{#2}{*}
     \directlua{
-        varCall = optsTable.varName or 'var'
-        eqtCall = optsTable.eqtName or 'eqt'
-        varTable = {}
-        eqtTable = {}
-        pyEqt = pg[eqtCall]
-        pyVar = pg[varCall]
-        python.execute("varKeys = list("..varCall..".keys())")
-        python.execute("eqtKeys = list("..eqtCall..".keys())")
-        python.execute("eqtLen = len(eqtKeys)")
-        python.execute("varLen = len(varKeys)")
-        lenVar = math.floor(pg.varLen)
-        lenEqt = math.floor(pg.eqtLen)
-        for i = 0, lenVar-1, 1 do
-            local key = pg.varKeys[i]
-            local value = pyVar[key]
-            varTable[key] = value
-        end
-        for i = 0, lenEqt-1, 1 do
-            local key = pg.eqtKeys[i]
-            local value = pyEqt[key]
-            eqtTable[key] = value
-        end
-
-        newGlFromTable(varTable)
-        newGlFromTable(eqtTable)
-        newEqtFromTable(eqtTable)
+        local optsTable = optsToTable([[#1]])
+        local path = pyPathAdd(optsTable['path'], [[#2]])
+        python.execute("from "..[[#2]].." import *")
+        setupSympy(optsTable)
     }
 }

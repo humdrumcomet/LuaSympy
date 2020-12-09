@@ -1,30 +1,33 @@
-function pgDictToTable(importLoc)
-eqTab = {}
-varTab = {}
-python.execute([[var, eqt = lsh.getVandEfromFile(']]..importLoc..[[')
-for key, value in var:
-    lua.eval('eqTab['+key+']='+value)
-for key, value in var:
-    lua.eval('varTab['+key+']='+value)
-]])
-    print(type(eqTab))
-    print(eqTab)
-    for key, value in pairs(eqTab) do
-        print(key, value)
-    end
-    return {varTab, eqTab}
+function setupSympy(optsTable)
+    varCall = optsTable.varName or 'var'
+    eqtCall = optsTable.eqtName or 'eqt'
+    pyEqt = pg[eqtCall]
+    pyVar = pg[varCall]
+    addGlFromTable(pyVar)
+    addGlFromTable(pyEqt)
+    addEqtFromTable(pyEqt)
 end
 
---function optsToTable(opts)
-    --print(opts)
-    --if opts == 'path' then
-        --return ''
-    --end
-    --inputs = {}
-    --for key, value in string.gmatch(opts, '(%w+)%s*=%s*(.*),*') do
-        --print(key)
-        --print(value)
-        --inputs[key] = value
-    --end
-    --return inputs
---end
+function addEqtFromTable(eqTable)
+    for key, value in itPyPair(eqTable) do
+        newEqt(value.eqtType, key, value.finTex, value.initTex, value.interTex)
+    end
+end
+
+function addGlFromTable(glTable)
+    for key, value in itPyPair(glTable) do
+        local inputsTbl = {
+            name = key,
+            display = value.display,
+            description = value.description,
+            kind = value.glsType or 'sym',
+            ensureMath = value.ensureMath
+        }
+        if inputsTbl.ensureMath then
+            inputsTbl.display = [[\ensuremath{]]..inputsTbl.display..[[}]]
+        end
+        if inputsTbl.description then
+            newGl(inputsTbl.kind, key, inputsTbl)
+        end
+    end
+end
