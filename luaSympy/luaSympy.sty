@@ -1,0 +1,28 @@
+\ProvidesPackage{luaSympy}
+\RequirePackage{luapackageloader}
+\RequirePackage{luacode}
+\RequirePackage{luaImport}
+\RequirePackage{lunatexPython}
+\RequirePackage{luaHelper}
+
+\directlua{
+    local sourcefile = kpse.find_file('luaSympy.sty')
+    local packagePath = string.match(sourcefile, '(.*/)')
+    luaSympy = require(packagePath..'luaSympy')
+}
+
+\newcommand\addPyFile[2][empty]{
+    \directlua{
+        local optsTable = optsToTable([[#1]])
+        local path = pyPathAdd(optsTable['path'], [[#2]])
+        python.execute("from "..[[#2]].." import *")
+        setupSympy(optsTable)
+    }
+}
+
+\newcommand\insertPyEq[2][empty]{
+    \directlua{
+        local optsTable = optsToTable([[#1]])
+        insertEqtFromPython([[#2]], optsTable)
+    }
+}
