@@ -8,19 +8,19 @@ will work without too much effort on any unix based system).
 ## Requirements
 This package requires the following LuaLaTeX packages:
 
-```
-luapackageloader
-luacode
-luaHelper
-lunatexPython
-luaImport
-```
+`luapackageloader` - Available in standard tex distributions
+
+`luacode` - Available in standard tex distributions
+
+`luaHelper` - Available [here](https://github.com/humdrumcomet/luahelper), as of writing, must be manually installed
+
+`lunatexPython` - Available [here](https://github.com/humdrumcomet/lunatexpython), as of writing, must be manually installed
+
+`luaImport` - Available [here](https://github.com/humdrumcomet/luaimport), as of writing, must be manually installed
+
 As well as the following Python module:
-```
-PyLuaSympy
-```
- `luapackageloader` and `luacode` are available in standard tex distributions but as of writing
-`luaHelper` must be installed manually and can be found [here](https://github.com/humdrumcomet/luahelper).
+
+`PyLuaSympy` - Available [here](https://github.com/humdrumcomet/pyluasympy) and can be installed using pip after cloning
 
 ## Installation
 To install this package manually, first make sure that you have a local texmf directory with a
