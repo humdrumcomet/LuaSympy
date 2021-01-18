@@ -8,15 +8,11 @@ will work without too much effort on any unix based system).
 ## Requirements
 This package requires the following LuaLaTeX packages:
 
-`luapackageloader` - Available in standard tex distributions
-
-`luacode` - Available in standard tex distributions
-
-`luaHelper` - Available [here](https://github.com/humdrumcomet/luahelper), as of writing, must be manually installed
-
-`lunatexPython` - Available [here](https://github.com/humdrumcomet/lunatexpython), as of writing, must be manually installed
-
-`luaImport` - Available [here](https://github.com/humdrumcomet/luaimport), as of writing, must be manually installed
+`luapackageloader` - Available in standard tex distributions\\
+`luacode` - Available in standard tex distributions\\
+`luaHelper` - Available [here](https://github.com/humdrumcomet/luahelper), as of writing, must be manually installed\\
+`lunatexPython` - Available [here](https://github.com/humdrumcomet/lunatexpython), as of writing, must be manually installed\\
+`luaImport` - Available [here](https://github.com/humdrumcomet/luaimport), as of writing, must be manually installed\\
 
 As well as the following Python module:
 
